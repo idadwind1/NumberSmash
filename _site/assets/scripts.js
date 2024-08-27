@@ -77,10 +77,10 @@ function DocumentReadyEvent() {
 	const btnCheckGame = document.getElementById("checkGame");
 	const divGameOver = document.getElementById("gameover_div");
 	const divNumbers = document.getElementById("numbers");
-	const divShowSum = document.getElementById("ShowSumCheckBox");
+	const divShowSum = document.getElementById("show_sum_checkbox");
 	const divControls = document.getElementById("controls");
 	const spanSum = document.getElementById("sum_span");
-	const spanSumContainer = document.getElementById("sum_text");
+	const spanSumContainer = document.getElementById("sum_span_container");
 	const spanScore = document.getElementById("score_span");
 	const spanHelp = document.getElementById("help_span");
 	const spanGameOver = document.getElementById("gameover_text");

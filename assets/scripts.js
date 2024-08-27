@@ -77,7 +77,7 @@ function DocumentReadyEvent() {
 	const btnSubmit = document.getElementById("Submit");
 	const btnHelp = document.getElementById("Help");
 	const btnCheckGame = document.getElementById("checkGame");
-	const checkBoxShowSum = document.getElementById("ShowSumCheckBox");
+	const checkBoxShowSum = document.getElementById("show_sum_checkbox");
 	const spanSum = document.getElementById("sum_span");
 	const spanScore = document.getElementById("score_span");
 	const spanHelp = document.getElementById("help_span");
