@@ -18,26 +18,26 @@ var basic = true;
 ///////////////////////////////////////////////////////
 // Algorithms
 ///////////////////////////////////////////////////////
+function generateCombos(currentCombo, remainingElements) {
+	if (currentCombo.length === n) result.push(currentCombo);
+	else {
+		for (let i = 0; i < remainingElements.length; i++) {
+			const newCombo = currentCombo.concat(remainingElements[i]);
+			const newRemaining = remainingElements.slice(i + 1);
+			generateCombos(newCombo, newRemaining);
+		}
+	}
+}
 function getCombinations(arr, n) {
 	if (n > arr.length) return [];
 	const result = [];
-	function generateCombos(currentCombo, remainingElements) {
-		if (currentCombo.length === n) result.push(currentCombo);
-		else {
-			for (let i = 0; i < remainingElements.length; i++) {
-				const newCombo = currentCombo.concat(remainingElements[i]);
-				const newRemaining = remainingElements.slice(i + 1);
-				generateCombos(newCombo, newRemaining);
-			}
-		}
-	}
 	generateCombos([], arr);
 	return result;
 }
 function getPossibleCombinations() {
 	var res = [];
 	for (let i = 1; i < numberCount; i++) {
-		ls = getCombinations(Array.from({length: numberCount}, (_val, j) => j),i);
+		ls = getCombinations(Array.from({length: numberCount}, (val, j) => j),i);
 		for (let j of ls) {
 			j_sum = 0;
 			for (let k of j) {
@@ -69,18 +69,16 @@ function randomNum(minNum,maxNum){
 ///////////////////////////////////////////////////////
 function DocumentReadyEvent() {
 	// Define controls in constant
+	const divGameOver = document.getElementById("gameover_div");
+	const divNumbers = document.getElementById("numbers");
+	const divControls = document.getElementById("controls");
 	const btnReset = document.getElementById("Reset");
 	const btnSwitchColorScheme = document.getElementById("switch_color_scheme");
 	const btnSubmit = document.getElementById("Submit");
 	const btnHelp = document.getElementById("Help");
-	const checkBoxShowSum = document.getElementById("ShowSum");
 	const btnCheckGame = document.getElementById("checkGame");
-	const divGameOver = document.getElementById("gameover_div");
-	const divNumbers = document.getElementById("numbers");
-	const divShowSum = document.getElementById("ShowSumCheckBox");
-	const divControls = document.getElementById("controls");
+	const checkBoxShowSum = document.getElementById("ShowSumCheckBox");
 	const spanSum = document.getElementById("sum_span");
-	const spanSumContainer = document.getElementById("sum_text");
 	const spanScore = document.getElementById("score_span");
 	const spanHelp = document.getElementById("help_span");
 	const spanGameOver = document.getElementById("gameover_text");
@@ -90,21 +88,21 @@ function DocumentReadyEvent() {
 	///////////////////////////////////////////////////////
 	function lose(bool_switch, text) {
 		gameover = bool_switch;
-		spanGameOver.innerHTML = text;
+		spanGameOver.textContent = text;
 		if (bool_switch) {
 			divGameOver.classList.remove("hide");
 			divNumbers.classList.add("hide");
 			divControls.classList.add("hide");
 			btnReset.style.display = "inline-block";
 			if (!basic) btnSwitchColorScheme.style.display = "inline-block";
-			divShowSum.classList.remove("inline_block");
+			checkBoxShowSum.classList.remove("inline_block");
 		} else {
 			divGameOver.classList.add("hide");
 			divNumbers.classList.remove("hide");
 			divControls.classList.remove("hide");
 			btnReset.style.display = "";
 			if (!basic) btnSwitchColorScheme.style.display = "";
-			divShowSum.classList.add("inline_block");
+			checkBoxShowSum.classList.add("inline_block");
 		}
 	}
 
@@ -141,7 +139,7 @@ function DocumentReadyEvent() {
 	}
 
 	function numberbuttons_clicked(){
-		if (this.classList.contains("submit_button")){ // if it is already selected
+		if (this.classList.contains("submit_button")){
 			this.classList.remove("submit_button");
 			selectedNumbers.delete(this.getAttribute("id"));
 			selected--;
@@ -155,13 +153,13 @@ function DocumentReadyEvent() {
 		}
 	}
 
-	function initGame(numberCount = 7) {
+	function initGame(numbers = 7) {
 		updateScore(0);
 		updateHelp(0);
-		initNumbers(numberCount);
+		initNumbers(numbers);
 	}
 
-	function initNumbers(numberCount = 7){
+	function initNumbers(numbers = 7){
 		selected = 0;
 		selectedNumbers.clear();
 		updateSum(0);
@@ -216,7 +214,7 @@ function DocumentReadyEvent() {
 			selectedNumbers.clear();
 		}
 		else if (selected == 0) {
-			alert("You must select at least one number");
+			
 		}
 		else{
 			if (sum!=0){
@@ -231,33 +229,27 @@ function DocumentReadyEvent() {
 		lose(false, "")
 		initGame(numberCount);
 	});
-	checkBoxShowSum .addEventListener("click", function() {
-		if (spanSumContainer.classList.contains("hide-with-self")) spanSumContainer.classList.remove("hide-with-self");
-		else spanSumContainer.classList.add("hide-with-self");
+	checkBoxShowSum.addEventListener("click", function() {
+		if (spanSum.classList.contains("hide-with-self")) spanSum.classList.remove("hide-with-self");
+		else spanSum.classList.add("hide-with-self");
 	});
 	btnHelp.addEventListener("click", function() {
 		updateHelp(helpUsedTime+1);
-		var arr = getPossibleCombinations();
+		arr = getPossibleCombinations();
+		for (let i of selectedNumbers) document.getElementById(i).classList.remove("submit_button");
 		selectedNumbers = new Set(arr[randomNum(0,arr.length-1)]);
+		for (let i of selectedNumbers) document.getElementById(i).classList.add("submit_button");
 		selected = selectedNumbers.length;
-		for (let i = 1; i <= numberCount; i++) {
-			if (selectedNumbers.has(i) && !document.getElementById(i).classList.contains("submit_button")) {
-				document.getElementById(i).classList.add("submit_button");
-			}
-			else {
-				document.getElementById(i).classList.remove("submit_button");
-			}
-		}
 	});
 	btnCheckGame.addEventListener("click", function() {
-		var arr = getPossibleCombinations();
-		if (arr.length == 0) {
-			initNumbers(numberCount);
-			return;
-		}
-		// arr = arr[randomNum(0,arr.length-1)];
-		var tmp = arr.map(item => item.map(i => getNumberString(numbers[i - 1])).join("+")).join("<br/>"); // use numbers[i - 1] becuz i starts from 1
-		lose(true, "Valid smash found!<br/>" + tmp + "<br/> can still be smashed");
+		arr = getPossibleCombinations();
+		if (arr.length == 0) {initNumbers(numberCount);return;}
+		arr = arr[randomNum(0,arr.length-1)];
+		tmp = "";
+		console.log(arr);
+		for (let i of arr) tmp += getNumberString(numbers[i-1]) + "+";
+		tmp = tmp.substr(0, tmp.length - 1);
+		lose(true, "A valid smash found! " + tmp + " can still be smashed");
 	});
 }
 if (document.readyState !== "loading") {

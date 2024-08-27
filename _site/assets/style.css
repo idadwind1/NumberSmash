@@ -1,12 +1,6 @@
 :root{
 	--night-foreground-color: #E0E0E0;
 	--night-background-color: #424242;
-	--light-foreground-color: black;
-	--light-background-color: white;
-	--submit-button-color: green;
-	--reset-button-color: red;
-	--warning-button-color: gold;
-	--default-button-color: gray;
 }
 
 /*body*/
@@ -34,7 +28,7 @@
 }
 /*texts*/
 .night span{
-	color: var(--night-foreground-color);
+	color: white;
 }
 .title {
 	font-size: 36px;
@@ -59,27 +53,27 @@
 	height: 30px;
 	font-size: 16px;
 	cursor: pointer;
-	background-color: var(--light-background-color);
-	color: var(--light-foreground-color);
-	border: 2px solid var(--default-button-color);
+	background-color: white;
+	color: black;
+	border: 2px solid gray;
 }
 .night .buttons {	
-    background-color: var(--night-background-color);
-    color: var(--night-foreground-color);
+    background-color: #424242;
+    color: white;
 }
 .buttons:hover/*,.buttons:focus*/ {
-    color: var(--light-background-color);
-    background-color: var(--default-button-color);
+    color: white;
+    background-color: gray;
     box-shadow: 0 12px 16px 0 rgba(0,0,0,0.25),0 17px 50px 0 rgba(0,0,0,0.20);
 }
 .submit_button:hover/*,.submit_button:focus*/ {
-    background-color: var(--submit-button-color);
+    background-color: green;
 }
 .reset_button:hover/*,.reset_button:focus*/ {
-    background-color: var(--reset-button-color);
+    background-color: red;
 }
 .warning_button:hover{
-	background-color: var(--warning-button-color);
+	background-color: gold;
 	color: black;
 }
 /*checkboxes&radioboxes*/
@@ -89,9 +83,9 @@
 	border-radius: 5px;
 	font-size: 16px;
 	cursor: pointer;
-	border: 2px solid var(--default-button-color);
+	border: 2px solid gray;
 	height: 24.8px;
 }
 .checkbox:hover/*,.checkbox:focus*/ {
-    background-color: var(--default-button-color);
+    background-color: gray;
 }
