@@ -1,6 +1,16 @@
 :root{
 	--night-foreground-color: #E0E0E0;
 	--night-background-color: #424242;
+	--light-background-color: #F5F5F5;
+	--light-foreground-color: #212121;
+	--submit-button-background-color: green;
+	--submit-button-foreground-color: white;
+	--reset-button-background-color: red;
+	--reset-button-foreground-color: white;
+	--warning-button-background-color: gold;
+	--warning-button-foreground-color: black;
+	--default-button-background-color: gray;
+	--default-button-foreground-color: white;
 }
 
 /*body*/
@@ -27,7 +37,7 @@
 	transition-duration: 0s;
 }
 /*texts*/
-.night span{
+.night span, .night div{
 	color: white;
 }
 .title {
@@ -53,39 +63,38 @@
 	height: 30px;
 	font-size: 16px;
 	cursor: pointer;
-	background-color: white;
-	color: black;
-	border: 2px solid gray;
+	border: 2px solid var(--default-button-background-color);
+	background-color: var(--light-background-color);
+	color: var(--light-foreground-color);
 }
 .night .buttons {	
-    background-color: #424242;
-    color: white;
+    background-color: var(--night-background-color);
+	color: var(--night-foreground-color);
 }
 .buttons:hover/*,.buttons:focus*/ {
-    color: white;
-    background-color: gray;
     box-shadow: 0 12px 16px 0 rgba(0,0,0,0.25),0 17px 50px 0 rgba(0,0,0,0.20);
 }
+.buttons:hover/*,.checkbox:focus*/ {
+    background-color: var(--default-button-background-color);
+    color: var(--default-button-foreground-color);
+}
 .submit_button:hover/*,.submit_button:focus*/ {
-    background-color: green;
+    background-color: var(--submit-button-background-color);
+	color: var(--submit-button-foreground-color);
 }
 .reset_button:hover/*,.reset_button:focus*/ {
-    background-color: red;
+    background-color: var(--reset-button-background-color);
+	color: var(--reset-button-foreground-color);
 }
 .warning_button:hover{
-	background-color: gold;
-	color: black;
+	background-color: var(--warning-button-background-color);
+	color: var(--warning-button-foreground-color);
 }
-/*checkboxes&radioboxes*/
 .checkbox{
 	padding: 1px 6px 1px 0px;
 	display: inline-block;
 	border-radius: 5px;
 	font-size: 16px;
 	cursor: pointer;
-	border: 2px solid gray;
 	height: 24.8px;
-}
-.checkbox:hover/*,.checkbox:focus*/ {
-    background-color: gray;
 }

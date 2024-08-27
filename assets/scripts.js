@@ -79,6 +79,7 @@ function DocumentReadyEvent() {
 	const btnCheckGame = document.getElementById("check_game_button");
 	const checkBoxShowSum = document.getElementById("show_sum_checkbox");
 	const spanSum = document.getElementById("sum_span");
+	const spanSumContainer = document.getElementById("sum_span_container");
 	const spanScore = document.getElementById("score_span");
 	const spanHelp = document.getElementById("help_span");
 	const spanGameOver = document.getElementById("gameover_span");
@@ -230,8 +231,9 @@ function DocumentReadyEvent() {
 		initGame(numberCount);
 	});
 	checkBoxShowSum.addEventListener("click", function() {
-		if (spanSum.classList.contains("hide-with-self")) spanSum.classList.remove("hide-with-self");
-		else spanSum.classList.add("hide-with-self");
+		console.log("1");
+		if (spanSumContainer.classList.contains("hide-with-self")) spanSumContainer.classList.remove("hide-with-self");
+		else spanSumContainer.classList.add("hide-with-self");
 	});
 	btnHelp.addEventListener("click", function() {
 		updateHelp(helpUsedTime+1);
