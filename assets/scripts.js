@@ -18,19 +18,19 @@ var basic = true;
 ///////////////////////////////////////////////////////
 // Algorithms
 ///////////////////////////////////////////////////////
-function generateCombos(currentCombo, remainingElements) {
-	if (currentCombo.length === n) result.push(currentCombo);
-	else {
-		for (let i = 0; i < remainingElements.length; i++) {
-			const newCombo = currentCombo.concat(remainingElements[i]);
-			const newRemaining = remainingElements.slice(i + 1);
-			generateCombos(newCombo, newRemaining);
-		}
-	}
-}
 function getCombinations(arr, n) {
 	if (n > arr.length) return [];
 	const result = [];
+	function generateCombos(currentCombo, remainingElements) {
+		if (currentCombo.length === n) result.push(currentCombo);
+		else {
+			for (let i = 0; i < remainingElements.length; i++) {
+				const newCombo = currentCombo.concat(remainingElements[i]);
+				const newRemaining = remainingElements.slice(i + 1);
+				generateCombos(newCombo, newRemaining);
+			}
+		}
+	}
 	generateCombos([], arr);
 	return result;
 }
@@ -72,6 +72,7 @@ function DocumentReadyEvent() {
 	const divGameOver = document.getElementById("gameover_div");
 	const divNumbers = document.getElementById("numbers");
 	const divControls = document.getElementById("controls");
+	const divShowSum = document.getElementById("show_sum_checkbox_container");
 	const btnReset = document.getElementById("reset_button");
 	const btnSwitchColorScheme = document.getElementById("switch_color_scheme_button");
 	const btnSubmit = document.getElementById("submit_button");
@@ -89,21 +90,23 @@ function DocumentReadyEvent() {
 	///////////////////////////////////////////////////////
 	function lose(bool_switch, text) {
 		gameover = bool_switch;
-		spanGameOver.textContent = text;
+		spanGameOver.innerHTML = text;
 		if (bool_switch) {
 			divGameOver.classList.remove("hide");
 			divNumbers.classList.add("hide");
 			divControls.classList.add("hide");
+			divShowSum.classList.add("hide");
 			btnReset.style.display = "inline-block";
 			if (!basic) btnSwitchColorScheme.style.display = "inline-block";
-			checkBoxShowSum.classList.remove("inline_block");
+			divShowSum.classList.remove("inline_block");
 		} else {
 			divGameOver.classList.add("hide");
 			divNumbers.classList.remove("hide");
 			divControls.classList.remove("hide");
+			divShowSum.classList.remove("hide");
 			btnReset.style.display = "";
 			if (!basic) btnSwitchColorScheme.style.display = "";
-			checkBoxShowSum.classList.add("inline_block");
+			divShowSum.classList.add("inline_block");
 		}
 	}
 
@@ -154,19 +157,19 @@ function DocumentReadyEvent() {
 		}
 	}
 
-	function initGame(numbers = 7) {
+	function initGame(count = 7) {
 		updateScore(0);
 		updateHelp(0);
-		initNumbers(numbers);
+		initNumbers(count);
 	}
 
-	function initNumbers(numbers = 7){
+	function initNumbers(count = 7){
 		selected = 0;
 		selectedNumbers.clear();
 		updateSum(0);
 		numbers = [];
 		divNumbers.innerHTML = "";
-		for (var i = 1; i <= numberCount; i++){
+		for (var i = 1; i <= count; i++){
 			n = randomNum(-10,9);
 			numbers.push(n);
 			divNumbers.insertAdjacentHTML("beforeend", "<input type=\"button\" id=\"" + i + "\" value=\"" + getNumberString(n) + "\" class=\"" + (basic?"":"buttons ") + "numberbuttons\">");
@@ -215,7 +218,7 @@ function DocumentReadyEvent() {
 			selectedNumbers.clear();
 		}
 		else if (selected == 0) {
-			
+			alert("You must select at least one number to submit");
 		}
 		else{
 			if (sum!=0){
@@ -227,31 +230,33 @@ function DocumentReadyEvent() {
 		}
 	});
 	btnReset.addEventListener("click",function(){
-		lose(false, "")
+		lose(false, "");
 		initGame(numberCount);
 	});
 	checkBoxShowSum.addEventListener("click", function() {
-		console.log("1");
 		if (spanSumContainer.classList.contains("hide-with-self")) spanSumContainer.classList.remove("hide-with-self");
 		else spanSumContainer.classList.add("hide-with-self");
 	});
 	btnHelp.addEventListener("click", function() {
 		updateHelp(helpUsedTime+1);
-		arr = getPossibleCombinations();
+		var arr = getPossibleCombinations();
+		if (arr.length == 0) {
+			alert("No possible combinations found, you may click the 'I can't find a valid smash' button to reset the game");
+			return;
+		}
 		for (let i of selectedNumbers) document.getElementById(i).classList.remove("submit_button");
 		selectedNumbers = new Set(arr[randomNum(0,arr.length-1)]);
 		for (let i of selectedNumbers) document.getElementById(i).classList.add("submit_button");
 		selected = selectedNumbers.length;
 	});
 	btnCheckGame.addEventListener("click", function() {
-		arr = getPossibleCombinations();
-		if (arr.length == 0) {initNumbers(numberCount);return;}
-		arr = arr[randomNum(0,arr.length-1)];
-		tmp = "";
-		console.log(arr);
-		for (let i of arr) tmp += getNumberString(numbers[i-1]) + "+";
-		tmp = tmp.substr(0, tmp.length - 1);
-		lose(true, "A valid smash found! " + tmp + " can still be smashed");
+		var arr = getPossibleCombinations();
+		if (arr.length == 0) {
+			initNumbers(numberCount);
+			return;
+		}
+		var tmp = arr.map(item => item.map(i => getNumberString(numbers[i-1])).join("+")).join("<br/>");
+		lose(true, "A valid smash found!<br/>" + tmp + "<br/>can still be smashed");
 	});
 }
 if (document.readyState !== "loading") {
