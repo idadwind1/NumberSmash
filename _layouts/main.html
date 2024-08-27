@@ -29,15 +29,15 @@
 		<div style="text-align: center;" class="hide" id="gameover_div">
 			<span class="subtitle">Game Over</span>
 			<br>
-			<span class="subtitle2" id="gameover_text"></span>
+			<span class="subtitle2" id="gameover_span"></span>
 		</div>
 		<br>
 		<div id="controls" style="text-align: center;">
-			<input type="submit" id="Submit" value="Submit" class="buttons submit_button">
-			<input type="reset" id="Reset" value="Reset" class="buttons reset_button">
-			<input type="button" id="checkGame" value="I can't find a valid smash" class="buttons warning_button">
-			<input type="button" id="Help" value="Help" class="buttons">
-			<div id="ShowSumCheckBox" class="inline_block">
+			<input type="submit" id="submit_button" value="Submit" class="buttons submit_button">
+			<input type="reset" id="reset_button" value="Reset" class="buttons reset_button">
+			<input type="button" id="check_game_button" value="I can't find a valid smash" class="buttons warning_button">
+			<input type="button" id="help_button" value="Help" class="buttons">
+			<div id="show_sum_checkbox" class="inline_block">
 				<label for="ShowSum" class="buttons checkbox">
 					<input type="checkbox" id="ShowSum" style="cursor: pointer">
 					<span style="cursor: pointer" class="not-trans">Show Sum</span>
@@ -45,7 +45,7 @@
 			</div>
 			{% if page.basic %}
 			{% else %}
-			<input type="button" id="switch_color_scheme" value="Dark Mode" class="buttons">
+			<input type="button" id="switch_color_scheme_button" value="Dark Mode" class="buttons">
 			{% endif %}
 		</div>
 		<div id="infomations" style="text-align: center;">
