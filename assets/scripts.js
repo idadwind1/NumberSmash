@@ -72,16 +72,16 @@ function DocumentReadyEvent() {
 	const divGameOver = document.getElementById("gameover_div");
 	const divNumbers = document.getElementById("numbers");
 	const divControls = document.getElementById("controls");
-	const btnReset = document.getElementById("Reset");
-	const btnSwitchColorScheme = document.getElementById("switch_color_scheme");
-	const btnSubmit = document.getElementById("Submit");
-	const btnHelp = document.getElementById("Help");
-	const btnCheckGame = document.getElementById("checkGame");
-	const checkBoxShowSum = document.getElementById("ShowSumCheckBox");
+	const btnReset = document.getElementById("reset_button");
+	const btnSwitchColorScheme = document.getElementById("switch_color_scheme_button");
+	const btnSubmit = document.getElementById("submit_button");
+	const btnHelp = document.getElementById("help_button");
+	const btnCheckGame = document.getElementById("check_game_button");
+	const checkBoxShowSum = document.getElementById("show_sum_checkbox");
 	const spanSum = document.getElementById("sum_span");
 	const spanScore = document.getElementById("score_span");
 	const spanHelp = document.getElementById("help_span");
-	const spanGameOver = document.getElementById("gameover_text");
+	const spanGameOver = document.getElementById("gameover_span");
 
 	///////////////////////////////////////////////////////
 	// Controls
