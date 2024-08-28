@@ -244,10 +244,18 @@ function DocumentReadyEvent() {
 			alert("No possible combinations found, you may click the 'I can't find a valid smash' button to reset the game");
 			return;
 		}
-		for (let i of selectedNumbers) document.getElementById(i).classList.remove("submit_button");
-		selectedNumbers = new Set(arr[randomNum(0,arr.length-1)]);
-		for (let i of selectedNumbers) document.getElementById(i).classList.add("submit_button");
+		var solution = arr[randomNum(0,arr.length-1)];
+		for (let i = 0; i < numberCount; i++) {
+			if (solution.includes(i+1)) {
+				document.getElementById(i+1).classList.add("submit_button");
+			}
+			else {
+				document.getElementById(i+1).classList.remove("submit_button");
+			}
+		}
+		selectedNumbers = new Set(solution);
 		selected = selectedNumbers.length;
+		updateSum(0);
 	});
 	btnCheckGame.addEventListener("click", function() {
 		var arr = getPossibleCombinations();
