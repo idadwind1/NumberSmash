@@ -34,25 +34,30 @@ function getCombinations(arr, n) {
 	generateCombos([], arr);
 	return result;
 }
-function getPossibleCombinations() {
-	var res = [];
-	for (let i = 1; i < numberCount; i++) {
-		ls = getCombinations(Array.from({length: numberCount}, (val, j) => j),i);
-		for (let j of ls) {
-			j_sum = 0;
-			for (let k of j) {
-				j_sum += numbers[k];
-			}
-			if (j_sum == 0){
-				tmp = [];
-				for (let k of j) {
-					tmp.push(k+1);
+function getPossibleCombinations(numbers) {
+	const n = numbers.length;
+	const bySize = Array.from({ length: n }, () => []);
+	const selected = [];
+
+	function search(start, sum) {
+		for (let i = start; i < n; i++) {
+			selected.push(i + 1);
+			const nextSum = sum + numbers[i];
+
+			// Exclude the full set, matching your original code.
+			if (selected.length < n) {
+				if (nextSum === 0) {
+					bySize[selected.length].push([...selected]);
 				}
-				res.push(tmp);
+				search(i + 1, nextSum);
 			}
+
+			selected.pop();
 		}
 	}
-	return res;
+
+	search(0, 0);
+	return bySize.flat();
 }
 function randomNum(minNum,maxNum){ 
     switch(arguments.length){ 
